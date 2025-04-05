@@ -28,10 +28,21 @@ install_brew:
 	brew update
 	brew install hidapi gtk+3 pygobject3 gobject-introspection
 
+install_brew_python3.13:
+	@echo "Installing Solaar dependencies via brew"
+	brew update
+	brew install hidapi gtk+3 pygobject3 glib
+
 install_pip:
 	@echo "Installing Solaar via pip"
 	python -m pip install --upgrade pip
 	pip install $(PIP_ARGS)
+
+install_pip_macos_python3.13:
+	@echo "Installing Solaar via pip"
+	python -m pip install --upgrade pip
+	pip install $(PIP_ARGS)
+	python -m pip install --no-deps --upgrade PyGObject
 
 install_pipx:
 	@echo "Installing Solaar via pipx"

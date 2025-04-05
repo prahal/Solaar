@@ -58,12 +58,26 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Set up macOS dependencies
+    - name: Set up macOS dependencies for python 3.8
+      if: matrix.python-version == '3.8'
       run: |
         make install_brew
-    - name: Install Python dependencies
+
+    - name: Set up macOS dependencies for python 3.13
+      if: matrix.python-version == '3.13'
+      run: |
+        make install_brew_python3.13
+
+    - name: Install Python dependencies python 3.8
+      if: matrix.python-version == '3.8'
       run: |
         make install_pip PIP_ARGS='.["test"]'
+
+    - name: Install Python dependencies python 3.13
+      if: matrix.python-version == '3.13'
+      run: |
+        make install_pip_macos_python3.13 PIP_ARGS='.["test"]'
+
     - name: Run tests on macOS
       run: |
         export DYLD_LIBRARY_PATH=$(brew --prefix hidapi)/lib:$DYLD_LIBRARY_PATH && pytest --cov --cov-report=xml
